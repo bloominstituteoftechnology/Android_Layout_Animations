@@ -8,12 +8,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.transition.Slide;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Transition;
+import android.transition.TransitionSet;
+import android.transition.TransitionValues;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +62,17 @@ public class ContactListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+//        final android.transition.Slide transition = new  android.transition.Slide();
+        final Fade transition = new  Fade();
+        transition.setStartDelay(250);
+        transition.setDuration(5000);
+        getWindow().setEnterTransition(transition);
+        getWindow().setExitTransition(transition);
+        supportPostponeEnterTransition();
+
+
         setContentView(R.layout.activity_contact_list);
 
         context = this;
@@ -89,7 +109,9 @@ public class ContactListActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        supportStartPostponedEnterTransition();
                         setupRecyclerView((RecyclerView) recyclerView);
+
                     }
                 });
             }
@@ -188,6 +210,11 @@ public class ContactListActivity extends AppCompatActivity {
             holder.mIdView.setText(String.valueOf(mValues.get(position).id));
             holder.itemView.setTag(mValues.get(position));
             holder.itemView.setOnClickListener(mOnClickListener);
+
+            Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), android.R.anim.slide_in_left);
+            animation.setDuration(1000);
+            holder.itemView.startAnimation(animation);
+
         }
 
         @Override
