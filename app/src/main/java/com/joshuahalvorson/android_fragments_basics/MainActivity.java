@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Fade;
+import android.view.View;
 import android.view.Window;
 
 import io.magicthegathering.javasdk.resource.Card;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements MtgCardFragment.O
     }
 
     @Override
-    public void onListFragmentInteraction(Card item) {
+    public void onListFragmentInteraction(Card item, View sharedView) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("card", item);
         if(getResources().getBoolean(R.bool.is_tablet)){
@@ -36,8 +37,11 @@ public class MainActivity extends AppCompatActivity implements MtgCardFragment.O
         }else{
             Intent intent = new Intent(getApplicationContext(), PhoneDetailActivity.class);
             intent.putExtra("card", item);
-            Bundle options = ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle();
-            startActivity(intent, options);
+            Bundle sceneOptions = ActivityOptions.makeSceneTransitionAnimation(
+                    (Activity)context, sharedView, sharedView.getTransitionName()).toBundle();
+            //ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                    //(Activity)sharedView.getContext(), sharedView, sharedView.getTransitionName());
+            startActivity(intent, sceneOptions);
         }
     }
 }

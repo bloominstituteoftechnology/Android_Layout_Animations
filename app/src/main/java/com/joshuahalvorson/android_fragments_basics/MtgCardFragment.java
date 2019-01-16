@@ -144,6 +144,6 @@ public class MtgCardFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Card item);
+        void onListFragmentInteraction(Card item, View sharedView);
     }
 }

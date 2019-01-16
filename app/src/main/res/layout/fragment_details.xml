@@ -15,6 +15,7 @@
 
         <ImageView
             android:id="@+id/card_image"
+            android:transitionName="image_transition"
             android:layout_width="match_parent"
             android:layout_height="254dp"
             tools:src="@tools:sample/avatars" />
