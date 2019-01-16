@@ -88,18 +88,40 @@ public class MtgCardFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Card card1 = CardAPI.getCard(1);
-                Card card2 = CardAPI.getCard(2);
-                Card card3 = CardAPI.getCard(3);
-                Card card4 = CardAPI.getCard(4);
-                Card card5 = CardAPI.getCard(5);
-                Card card6 = CardAPI.getCard(6);
+                Card card1 = CardAPI.getCard(43);
+                Card card2 = CardAPI.getCard(373);
                 mtgCards.add(card1);
                 mtgCards.add(card2);
-                mtgCards.add(card3);
-                mtgCards.add(card4);
-                mtgCards.add(card5);
-                mtgCards.add(card6);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
+                mtgCards.add(card1);
+                mtgCards.add(card2);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

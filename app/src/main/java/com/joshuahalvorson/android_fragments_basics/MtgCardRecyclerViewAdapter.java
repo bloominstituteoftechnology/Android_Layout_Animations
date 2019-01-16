@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,6 +48,8 @@ public class MtgCardRecyclerViewAdapter extends RecyclerView.Adapter<MtgCardRecy
 
         holder.author.setText(mValues.get(position).getName());
 
+        animateOnEnter(holder.mView, holder, position);
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +62,14 @@ public class MtgCardRecyclerViewAdapter extends RecyclerView.Adapter<MtgCardRecy
         });
     }
 
+    public void animateOnEnter(View view, ViewHolder viewHolder, int position){
+        if(position > viewHolder.lastPos){
+            Animation animation = AnimationUtils.loadAnimation(view.getContext(), android.R.anim.slide_in_left);
+            view.startAnimation(animation);
+            viewHolder.lastPos = position;
+        }
+    }
+
     @Override
     public int getItemCount() {
         return mValues.size();
@@ -68,9 +80,11 @@ public class MtgCardRecyclerViewAdapter extends RecyclerView.Adapter<MtgCardRecy
         public final ImageView image;
         public final TextView author;
         public Card mItem;
+        int lastPos;
 
         public ViewHolder(View view) {
             super(view);
+            lastPos = -1;
             mView = view;
             image = view.findViewById(R.id.image);
             author = view.findViewById(R.id.content);
