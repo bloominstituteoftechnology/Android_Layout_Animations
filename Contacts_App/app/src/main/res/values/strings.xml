@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ContactsApp</string>
+    <string name="show_contacts">Show Contacts</string>
+    <string name="title_activity_details">DetailsActivity</string>
+</resources>
