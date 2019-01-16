@@ -1,20 +1,28 @@
 package com.joshuahalvorson.android_fragments_basics;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.view.Window;
 
 import io.magicthegathering.javasdk.resource.Card;
 
 public class MainActivity extends AppCompatActivity implements MtgCardFragment.OnListFragmentInteractionListener{
 
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         MtgCardFragment fragment = new MtgCardFragment();
+        context = this;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
@@ -28,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements MtgCardFragment.O
         }else{
             Intent intent = new Intent(getApplicationContext(), PhoneDetailActivity.class);
             intent.putExtra("card", item);
-            startActivity(intent);
+            Bundle options = ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle();
+            startActivity(intent, options);
         }
     }
 }
