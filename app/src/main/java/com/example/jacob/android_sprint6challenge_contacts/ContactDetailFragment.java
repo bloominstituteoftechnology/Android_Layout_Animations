@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -64,6 +66,7 @@ public class ContactDetailFragment extends Fragment {
                 appBarLayout.setTitle(mItem.name);
             }
         }
+        getActivity().supportPostponeEnterTransition();
     }
 
     @Override
@@ -106,6 +109,13 @@ public class ContactDetailFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().supportStartPostponedEnterTransition();
+
     }
 
     @Override
