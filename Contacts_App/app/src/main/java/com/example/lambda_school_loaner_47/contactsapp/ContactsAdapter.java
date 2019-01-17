@@ -1,8 +1,11 @@
 package com.example.lambda_school_loaner_47.contactsapp;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +54,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailsActivity.class);
                 intent.putExtra(CONTACT_ADAPTER, contact);
+               // Bundle options = ActivityOptions.makeSceneTransitionAnimation((Activity) context).toBundle();
                 context.startActivity(intent);
             }
         });
