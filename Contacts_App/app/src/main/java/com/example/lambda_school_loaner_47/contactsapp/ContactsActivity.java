@@ -27,8 +27,12 @@ public class ContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-            getWindow().setEnterTransition(new Explode());
-            getWindow().setExitTransition(new Fade());
+            Fade transition = new Fade();
+            transition.setStartDelay(250);
+            transition.setDuration(250);
+            getWindow().setEnterTransition(transition);
+            getWindow().setExitTransition(transition);
+            supportPostponeEnterTransition();
         }
         setContentView(R.layout.activity_contacts);
 
@@ -46,6 +50,7 @@ public class ContactsActivity extends AppCompatActivity {
                 manager = new LinearLayoutManager(context);
                 view.setLayoutManager(manager);
                 view.setAdapter(adapter);
+                supportStartPostponedEnterTransition();
 
                 ContactsDao.getContacts(new ContactsDao.ObjectCallback<ArrayList<Contacts>>() {
                     @Override
