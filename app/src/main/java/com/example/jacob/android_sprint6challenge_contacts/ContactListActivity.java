@@ -67,7 +67,6 @@ public class ContactListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-//        final android.transition.Slide transition = new  android.transition.Slide();
         final Fade transition = new  Fade();
         transition.setStartDelay(250);
         transition.setDuration(500);
@@ -136,30 +135,6 @@ public class ContactListActivity extends AppCompatActivity {
         private final boolean mTwoPane;
 
 
-/*        private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Contact contact = (Contact) view.getTag();
-                if (mTwoPane) {
-                    Bundle arguments = new Bundle();
-                    arguments.putInt(ContactDetailFragment.ARG_ITEM_ID, contact.id);
-                    ContactDetailFragment fragment = new ContactDetailFragment();
-                    fragment.setArguments(arguments);
-                    mParentActivity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.contact_detail_container, fragment)
-                            .commit();
-                } else {
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context, ContactDetailActivity.class);
-                    intent.putExtra(ContactDetailFragment.ARG_ITEM_ID, contact.id);
-                    final ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation((Activity) context, view, ViewCompat.getTransitionName(view));
-                    context.startActivity(intent, activityOptions.toBundle());
-//                    context.startActivity(intent);
-                }
-            }
-        };*/
-
-
         SimpleItemRecyclerViewAdapter(ContactListActivity parent,
                                       ArrayList<Contact> items,
                                       boolean twoPane) {
@@ -214,7 +189,6 @@ public class ContactListActivity extends AppCompatActivity {
             holder.mNameView.setText(mValues.get(position).name);
             holder.mIdView.setText(String.valueOf(mValues.get(position).id));
             holder.itemView.setTag(mValues.get(position));
-//            holder.itemView.setOnClickListener(mOnClickListener);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -234,12 +208,7 @@ public class ContactListActivity extends AppCompatActivity {
                         intent.putExtra(ContactDetailFragment.ARG_ITEM_ID, contact.id);
                         final ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation((Activity) context, holder.mImageView, ViewCompat.getTransitionName(holder.mImageView));
                         context.startActivity(intent, activityOptions.toBundle());
-//                    context.startActivity(intent);
                     }
-
-
-
-
 
                 }
             });
