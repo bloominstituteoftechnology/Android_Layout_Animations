@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.example.patrickjmartin.myapplication.PokemonAPI.IcePokemonConstants;
 import com.example.patrickjmartin.myapplication.PokemonAPI.Pokemon;
 import com.example.patrickjmartin.myapplication.PokemonAPI.PokemonDAO;
 
@@ -69,26 +70,12 @@ public class PokemonFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final Pokemon pokemon1 = PokemonDAO.getPokemon(133);
-                final Pokemon pokemon2 = PokemonDAO.getPokemon(134);
-                final Pokemon pokemon3 = PokemonDAO.getPokemon(135);
-                final Pokemon pokemon4 = PokemonDAO.getPokemon(136);
-                final Pokemon pokemon5 = PokemonDAO.getPokemon(197);
-                final Pokemon pokemon6 = PokemonDAO.getPokemon(471);
-                final Pokemon pokemon7 = PokemonDAO.getPokemon(470);
-                final Pokemon pokemon8 = PokemonDAO.getPokemon(196);
-                final Pokemon pokemon9 = PokemonDAO.getPokemon(700);
 
+                for(String url : IcePokemonConstants.ICE_TYPES) {
+                    final Pokemon pokemon = PokemonDAO.getPokemon(url);
+                    pokemonArrayList.add(pokemon);
+                }
 
-                pokemonArrayList.add(pokemon1);
-                pokemonArrayList.add(pokemon2);
-                pokemonArrayList.add(pokemon3);
-                pokemonArrayList.add(pokemon4);
-                pokemonArrayList.add(pokemon5);
-                pokemonArrayList.add(pokemon6);
-                pokemonArrayList.add(pokemon7);
-                pokemonArrayList.add(pokemon8);
-                pokemonArrayList.add(pokemon9);
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
