@@ -28,6 +28,7 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        supportPostponeEnterTransition();
 
         final Contacts contacts = getIntent().getParcelableExtra(ContactsAdapter.CONTACT_ADAPTER);
 
