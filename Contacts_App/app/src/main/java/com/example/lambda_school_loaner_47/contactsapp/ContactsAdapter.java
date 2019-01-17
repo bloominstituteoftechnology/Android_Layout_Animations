@@ -69,10 +69,15 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
             }).start();
             myViewHolder.pic.setImageBitmap(bitmap);
         }
+        setEnterAnimation(myViewHolder.parent, myViewHolder, i);
+    }
 
-        Animation animation = AnimationUtils.loadAnimation(myViewHolder.parent.getContext(), android.R.anim.slide_in_left);
-        animation.setDuration(100L);
-        myViewHolder.parent.startAnimation(animation);
+    private void setEnterAnimation(View viewToAnimate, MyViewHolder holder, int position){
+        if (position > holder.lastPosition){
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            holder.lastPosition = position;
+        }
     }
 
     @Override
@@ -90,10 +95,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyView
         ConstraintLayout parent;
         TextView         fullName;
         ImageView        pic;
+        int lastPosition;
 
         public MyViewHolder(@NonNull View contact) {
             super(contact);
 
+            lastPosition = -1;
             parent   = contact.findViewById(R.id.parentLayout);
             fullName = contact.findViewById(R.id.tvName);
             pic      = contact.findViewById(R.id.ivThumbnail);
