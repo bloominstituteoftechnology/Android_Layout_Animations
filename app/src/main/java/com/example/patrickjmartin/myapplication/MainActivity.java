@@ -27,14 +27,14 @@ public class MainActivity extends AppCompatActivity implements OnListFragmentInt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-             final Explode explode = new Explode();
-            explode.setStartDelay(200);
-            explode.setDuration(400);
-            getWindow().setEnterTransition(explode);
-            getWindow().setExitTransition(explode);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+//            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+//             final Explode explode = new Explode();
+//            explode.setStartDelay(200);
+//            explode.setDuration(400);
+//            getWindow().setEnterTransition(explode);
+//            getWindow().setExitTransition(explode);
+//        }
 
         setContentView(R.layout.activity_main);
 
