@@ -5,6 +5,7 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Explode;
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnListFragmentInt
         bundle.putSerializable("pokemon", item);
         Intent intent = new Intent(getApplicationContext(), PhoneDetailsActivity.class);
         intent.putExtra("pokemon", item);
-        Bundle sceneAnimation = ActivityOptions.makeSceneTransitionAnimation((Activity)context).toBundle();
-        startActivity(intent, sceneAnimation);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
+        startActivity(intent, options.toBundle());
     }
 }
