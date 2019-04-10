@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Explode;
@@ -30,8 +31,7 @@ public class ViewerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.Theme_AppCompat);
-        //setTheme(R.style.Theme_AppCompat_Light_DarkActionBar);
+        setTheme(R.style.AppThemeNoTransition);
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
@@ -64,18 +64,23 @@ public class ViewerActivity extends AppCompatActivity {
             for (String ability : selectedPokemonAbilities) {
                 layoutAbilities.addView(createTextView(ability));
             }
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    final Bitmap pokemonBitmap = NetworkAdapter.bitmapFromUrl(selectedPokemon.getSpriteUrl());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            spriteImageView.setImageBitmap(pokemonBitmap);
-                        }
-                    });
-                }
-            }).start();
+            if(intent.getParcelableExtra("ImageBitmap") != null) {
+                Bitmap imageBitmap = intent.getParcelableExtra("ImageBitmap");
+                spriteImageView.setImageBitmap(imageBitmap);
+            }else {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Bitmap pokemonBitmap = NetworkAdapter.bitmapFromUrl(selectedPokemon.getSpriteUrl());
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                spriteImageView.setImageBitmap(pokemonBitmap);
+                            }
+                        });
+                    }
+                }).start();
+            }
         } catch (NullPointerException e) {
             e.printStackTrace();
             finish();
