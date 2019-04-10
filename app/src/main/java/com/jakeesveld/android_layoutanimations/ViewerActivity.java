@@ -93,10 +93,9 @@ public class ViewerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
         Intent resultIntent = new Intent();
         resultIntent.putExtra(Pokemon.POKEMON_INTENT_KEY, selectedPokemon);
         setResult(RESULT_OK, resultIntent);
-        finish();
+        finishAfterTransition();
     }
 }
