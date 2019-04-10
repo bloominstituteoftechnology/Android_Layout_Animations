@@ -2,9 +2,20 @@ package com.example.android_layout_animations;
 
 import org.json.JSONObject;
 
-public class StarWarsFilmObject {
+import java.io.Serializable;
+
+public class StarWarsFilmObject implements Serializable {
     private String name,releaseDate,movieDeets;
-    private int id, episodeId;
+    private int id, episodeId, imageId;
+
+    public int getImageId() {
+        DrawableResolver.getDrawableId(getId());
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
 
     public int getEpisodeId() {
         return episodeId;
@@ -20,6 +31,7 @@ public class StarWarsFilmObject {
     }
 
     public String getName() {
+
         return name;
     }
 
