@@ -38,7 +38,10 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
 
         final ImageData imageData = imageDataArrayList.get(position);
         holder.nameTextView.setText(imageData.getName());
-        holder.nameTextView.setOnClickListener(new View.OnClickListener() {
+        holder.imageImageView.setImageURI(imageData.getUri());
+
+        holder.itemView.setAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), android.R.anim.slide_in_left));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // open details activity
@@ -49,10 +52,6 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
                 context.startActivity(intent, activityOptions.toBundle());
             }
         });
-
-        holder.imageImageView.setImageURI(imageData.getUri());
-
-        holder.itemView.setAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), android.R.anim.slide_in_left));
     }
 
     @Override
