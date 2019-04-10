@@ -36,11 +36,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        getWindow().setEnterTransition(new Fade());
-        getWindow().setExitTransition(new Fade());
-
         setContentView(R.layout.activity_main);
 
         Log.d(DEBUG_TAG, "MainActivity.onCreated");
