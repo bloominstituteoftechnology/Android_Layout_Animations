@@ -1,20 +1,29 @@
 package com.vivekvishwanath.android_sprint3_challenge;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.ViewHolder> {
 
@@ -35,7 +44,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Pokemon pokemon = searchedPokemon.get(position);
         holder.pokemonName.setText(pokemon.getName().toUpperCase());
         holder.pokemonListLayout.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +52,12 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
             public void onClick(View v) {
                 Intent intent = new Intent(context, ViewPokemon.class);
                 intent.putExtra(Constants.POKEMON_INTENT_KEY, pokemon);
-                context.startActivity(intent);
+                Bundle options = ActivityOptions.makeSceneTransitionAnimation(
+                        (Activity)v.getContext(),
+                        holder.pokemonName,
+                        ViewCompat.getTransitionName(holder.pokemonName)
+                ).toBundle();
+                context.startActivity(intent, options);
             }
         });
 
@@ -55,7 +69,6 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
                 return true;
             }
         });
-
         setEnterAnimation(holder.pokemonListLayout, position);
     }
 
@@ -74,14 +87,17 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout pokemonListLayout;
+        ConstraintLayout pokemonListLayout;
         TextView pokemonName;
+        ImageView pokemonImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             pokemonListLayout = itemView.findViewById(R.id.pokemon_list_layout);
             pokemonName = itemView.findViewById(R.id.pokemon_name);
+            pokemonImage = itemView.findViewById(R.id.pokemon_image);
         }
     }
+
 }

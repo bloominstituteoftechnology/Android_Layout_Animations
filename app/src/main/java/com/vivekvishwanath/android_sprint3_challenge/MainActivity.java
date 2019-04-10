@@ -70,4 +70,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        recyclerView.removeAllViews();
+        pokemonListAdapter = new PokemonListAdapter(searchedPokemon);
+        recyclerView.setAdapter(pokemonListAdapter);
+    }
 }
