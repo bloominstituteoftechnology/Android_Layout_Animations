@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="0.1">-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/linearLayout_previous_viewed_images"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
+
+            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="50dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:background="@drawable/text_view_bg"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:text="Sample Text View"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:textSize="30dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:textAlignment="center"/>&ndash;&gt;-->
+
+        <!--</LinearLayout>-->
+
+    <!--</ScrollView>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_image_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"
+        tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@layout/image_item_layout"
+        tools:orientation="vertical">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/button_add_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.9"
+        android:text="Add Image" />
+
+</LinearLayout>
