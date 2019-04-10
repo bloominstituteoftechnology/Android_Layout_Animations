@@ -30,8 +30,10 @@ public class ViewerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.Theme_AppCompat);
+        //setTheme(R.style.Theme_AppCompat_Light_DarkActionBar);
         super.onCreate(savedInstanceState);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
             getWindow().setEnterTransition(new Explode());
             getWindow().setExitTransition(new Explode());

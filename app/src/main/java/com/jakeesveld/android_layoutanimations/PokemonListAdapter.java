@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,9 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
                         data.getTypes());
                 intent.putExtra(Pokemon.POKEMON_INTENT_KEY, passablePokemon);
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
-                        ((Activity)pokemonViewHolder.parentLayout.getContext())).toBundle();
+                        ((Activity)pokemonViewHolder.parentLayout.getContext()),
+                        pokemonViewHolder.spriteView,
+                        ViewCompat.getTransitionName(pokemonViewHolder.spriteView)).toBundle();
 
                 pokemonViewHolder.parentLayout.getContext().startActivity(intent, bundle);
             }
