@@ -15,7 +15,7 @@ public class PokemonDao {
 
 
     private static String BASE_URL = "https://pokeapi.co/api/v2/pokemon";
-    private static String NAMES_URL = BASE_URL + "/?limit=10000";
+    private static String NAMES_URL = BASE_URL + "/?limit=50";
 
     public static ArrayList<Pokemon> getPokemonURLS(){
         ArrayList<Pokemon> pokemons = new ArrayList<>();
