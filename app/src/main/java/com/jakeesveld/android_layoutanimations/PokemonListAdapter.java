@@ -1,6 +1,9 @@
 package com.jakeesveld.android_layoutanimations;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -43,7 +46,10 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
                         data.getAbilities(),
                         data.getTypes());
                 intent.putExtra(Pokemon.POKEMON_INTENT_KEY, passablePokemon);
-                pokemonViewHolder.parentLayout.getContext().startActivity(intent);
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(
+                        ((Activity)pokemonViewHolder.parentLayout.getContext())).toBundle();
+
+                pokemonViewHolder.parentLayout.getContext().startActivity(intent, bundle);
             }
         });
 
