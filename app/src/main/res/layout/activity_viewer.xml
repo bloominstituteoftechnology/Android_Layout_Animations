@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewerActivity">
+
+    <TextView
+        android:id="@+id/text_view_name"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:text="@string/ViewerTextName"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/text_view_id"
+        android:textSize="18sp"
+        android:text="@string/ViewerTextNumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/layout_type_list"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/text_view_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:id="@+id/text_view_type_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:id="@+id/text_view_type_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/abilities_text_view"
+        app:layout_constraintTop_toBottomOf="@id/layout_type_list"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:text="@string/ViewerTextAbilities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/layout_abilities_list"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/abilities_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/image_view_sprite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</android.support.constraint.ConstraintLayout>
