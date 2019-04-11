@@ -154,16 +154,17 @@ public class ItemListActivity extends AppCompatActivity {
                     LoremPicsum item = (LoremPicsum) view.getTag();
                     if (mTwoPane) {
                         Bundle arguments = new Bundle();
-                        arguments.putString(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(item.getId()));
+                        arguments.putParcelable(ItemDetailFragment.ARG_ITEM_ID, item);
                         ItemDetailFragment fragment = new ItemDetailFragment();
                         fragment.setArguments(arguments);
-                        mParentActivity.getSupportFragmentManager().beginTransaction()
+                        mParentActivity.getSupportFragmentManager()
+                                .beginTransaction()
                                 .replace(R.id.item_detail_container, fragment)
                                 .commit();
                     } else {
                         Context context = view.getContext();
                         Intent intent = new Intent(context, ItemDetailActivity.class);
-                        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.getId());
+                        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item);
 
                         context.startActivity(intent);
                     }

@@ -1,10 +1,10 @@
 package com.lambdaschool.android_layout_animations;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import java.io.Serializable;
-
-public class LoremPicsum implements Serializable {
+public class LoremPicsum implements Parcelable {
 
     private int id;
     private int width;
@@ -44,6 +44,30 @@ public class LoremPicsum implements Serializable {
         this.authorUrl = authorUrl;
         this.postUrl = postUrl;
     }
+
+    protected LoremPicsum(Parcel in) {
+        id = in.readInt();
+        width = in.readInt();
+        height = in.readInt();
+        format = in.readString();
+        filename = in.readString();
+        author = in.readString();
+        authorUrl = in.readString();
+        postUrl = in.readString();
+        bitmap = in.readParcelable(Bitmap.class.getClassLoader());
+    }
+
+    public static final Creator<LoremPicsum> CREATOR = new Creator<LoremPicsum>() {
+        @Override
+        public LoremPicsum createFromParcel(Parcel in) {
+            return new LoremPicsum(in);
+        }
+
+        @Override
+        public LoremPicsum[] newArray(int size) {
+            return new LoremPicsum[size];
+        }
+    };
 
     public String getFormat() {
         return format;
@@ -115,6 +139,24 @@ public class LoremPicsum implements Serializable {
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(width);
+        dest.writeInt(height);
+        dest.writeString(format);
+        dest.writeString(filename);
+        dest.writeString(author);
+        dest.writeString(authorUrl);
+        dest.writeString(postUrl);
+        dest.writeParcelable(bitmap, flags);
     }
 
 /*    @Override
