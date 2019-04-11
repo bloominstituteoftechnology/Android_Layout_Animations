@@ -19,6 +19,7 @@
         <ImageView
             android:id="@+id/image_view_photo"
             android:adjustViewBounds="true"
+            android:transitionName="transition_name"
             android:src="@mipmap/ic_launcher"
             android:layout_width="wrap_content"
             android:layout_height="75dp" />

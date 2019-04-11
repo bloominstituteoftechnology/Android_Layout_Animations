@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -165,8 +166,12 @@ public class ItemListActivity extends AppCompatActivity {
                         Context context = view.getContext();
                         Intent intent = new Intent(context, ItemDetailActivity.class);
                         intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item);
-
-                        context.startActivity(intent);
+                        //Bundle options = ActivityOptions.makeSceneTransitionAnimation((Activity) view.getContext()).toBundle();
+                        Bundle options = ActivityOptions.makeSceneTransitionAnimation(
+                                (Activity) view.getContext(),
+                                holder.imageViewPhoto,
+                                ViewCompat.getTransitionName(holder.imageViewPhoto)).toBundle();
+                        context.startActivity(intent, options);
                     }
                 }
             });
