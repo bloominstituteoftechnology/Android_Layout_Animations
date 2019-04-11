@@ -147,8 +147,8 @@ public class PokemonFragment extends Fragment {
         protected Object doInBackground(Object[] objects) {
             int loopSize = PokemonDao.getAllPokemon().size();
             for (int i = 0; i < loopSize; i++) {
-                pokemon.addAll(PokemonDao.getAllPokemon());
                 PokemonDao.updatePokemon(PokemonDao.getPokemon(PokemonDao.getAllPokemon().get(i).getUrl()));
+                pokemon.add(PokemonDao.getAllPokemon().get(i));
                 publishProgress();
             }
             return null;
