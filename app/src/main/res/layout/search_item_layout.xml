@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="Pokemon Name"
-        android:transitionName="pokemon_transition"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
@@ -21,6 +20,7 @@
         android:id="@+id/pokemon_image"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:transitionName="transition_image"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

@@ -18,7 +18,6 @@
                 android:id="@+id/pokemon_name_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:transitionName="pokemon_transition"
                 app:layout_constraintTop_toTopOf="parent"
                 android:textSize="30sp"
                 android:gravity="center"/>
@@ -35,6 +34,7 @@
                 android:id="@+id/pokemon_sprite"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
+                android:transitionName="transition_image"
                 app:layout_constraintTop_toBottomOf="@id/pokemon_id_view"/>
 
             <ScrollView

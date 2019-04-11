@@ -47,6 +47,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Pokemon pokemon = searchedPokemon.get(position);
         holder.pokemonName.setText(pokemon.getName().toUpperCase());
+        holder.pokemonImage.setImageBitmap(MainActivity.sprites.get(pokemon.getId()));
         holder.pokemonListLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,8 +55,8 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
                 intent.putExtra(Constants.POKEMON_INTENT_KEY, pokemon);
                 Bundle options = ActivityOptions.makeSceneTransitionAnimation(
                         (Activity)v.getContext(),
-                        holder.pokemonName,
-                        ViewCompat.getTransitionName(holder.pokemonName)
+                        holder.pokemonImage,
+                        ViewCompat.getTransitionName(holder.pokemonImage)
                 ).toBundle();
                 context.startActivity(intent, options);
             }
@@ -64,6 +65,7 @@ public class PokemonListAdapter extends RecyclerView.Adapter<PokemonListAdapter.
         holder.pokemonListLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                MainActivity.sprites.remove(pokemon.getId());
                 searchedPokemon.remove(position);
                 notifyItemRemoved(position);
                 return true;
