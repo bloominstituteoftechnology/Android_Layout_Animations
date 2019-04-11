@@ -1,5 +1,7 @@
 package com.lambdaschool.android_layout_animations;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -114,12 +118,6 @@ public class ItemListActivity extends AppCompatActivity {
                 }
             }
         }).start();
-
-/*        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public static class SimpleItemRecyclerViewAdapter extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
@@ -127,6 +125,7 @@ public class ItemListActivity extends AppCompatActivity {
         private final ItemListActivity mParentActivity;
         private final ArrayList<LoremPicsum> loremPicsumArrayListForRecyclerView;
         private final boolean mTwoPane;
+        private int lastPosition = -1;
 
         SimpleItemRecyclerViewAdapter(ItemListActivity parent, ArrayList<LoremPicsum> items, boolean twoPane) {
             loremPicsumArrayListForRecyclerView = items;
@@ -170,6 +169,12 @@ public class ItemListActivity extends AppCompatActivity {
                     }
                 }
             });
+
+            if (position > lastPosition) {
+                Animation animation = AnimationUtils.loadAnimation(holder.parentView.getContext(), android.R.anim.slide_in_left);
+                holder.parentView.startAnimation(animation);
+                lastPosition = position;
+            }
         }
 
         @Override
@@ -180,6 +185,7 @@ public class ItemListActivity extends AppCompatActivity {
         class ViewHolder extends RecyclerView.ViewHolder {
             final ImageView imageViewPhoto;
             final TextView textViewId, textViewAuthor, textViewDimension, textViewFormat;
+            final View parentView;
 
             ViewHolder(View view) {
                 super(view);
@@ -188,6 +194,7 @@ public class ItemListActivity extends AppCompatActivity {
                 textViewAuthor = view.findViewById(R.id.text_view_author);
                 textViewDimension = view.findViewById(R.id.text_view_dimensions);
                 textViewFormat = view.findViewById(R.id.text_view_format);
+                parentView = view.findViewById(R.id.card_view_parent);
             }
         }
     }
