@@ -2,6 +2,7 @@ package com.lambdaschool.android_layout_animations;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,18 +36,17 @@ public class ItemListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
+    private SimpleItemRecyclerViewAdapter simpleItemRecyclerViewAdapter;
+    private ArrayList<LoremPicsum> loremPicsumArrayList;
+    private static final String TAG = "ItemListActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ArrayList<LoremPicsum> loremPicsumArrayList=LoremPicsumDao.getAllLoremPicsumObjects();
-            }
-        }).start();
+        loremPicsumArrayList = new ArrayList<>();
+        getData();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,40 +75,49 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, mTwoPane));
+        simpleItemRecyclerViewAdapter = new SimpleItemRecyclerViewAdapter(this, loremPicsumArrayList, mTwoPane);
+        recyclerView.setAdapter(simpleItemRecyclerViewAdapter);
+        //getData();
     }
 
-    public static class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
-
-        private final ItemListActivity mParentActivity;
-        private final List<DummyContent.DummyItem> mValues;
-        private final boolean mTwoPane;
-        private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
+    private void getData() {
+        new Thread(new Runnable() {
             @Override
-            public void onClick(View view) {
-                DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
-                if (mTwoPane) {
-                    Bundle arguments = new Bundle();
-                    arguments.putString(ItemDetailFragment.ARG_ITEM_ID, item.id);
-                    ItemDetailFragment fragment = new ItemDetailFragment();
-                    fragment.setArguments(arguments);
-                    mParentActivity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.item_detail_container, fragment)
-                            .commit();
-                } else {
-                    Context context = view.getContext();
-                    Intent intent = new Intent(context, ItemDetailActivity.class);
-                    intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id);
+            public void run() {
+                Log.i(TAG, "Beginning retrieval of all objects...");
+                loremPicsumArrayList = LoremPicsumDao.getAllLoremPicsumObjects();
+                Bitmap bitmap = null;
 
-                    context.startActivity(intent);
+                for (int i = 0; i < loremPicsumArrayList.size(); ++i) {
+//                    bitmap = LoremPicsumDao.getOneLoremPicsumPhoto(loremPicsumArrayList.get(i));
+//                    loremPicsumArrayList.get(i).setBitmap(bitmap);
+                    final int counter = i;
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            simpleItemRecyclerViewAdapter.notifyItemChanged(counter - 1);
+                            Log.i(TAG, "Notifying RecyclerView of changes at " + counter);
+                        }
+                    });
                 }
             }
-        };
+        }).start();
 
-        SimpleItemRecyclerViewAdapter(ItemListActivity parent,
-                                      List<DummyContent.DummyItem> items,
-                                      boolean twoPane) {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static class SimpleItemRecyclerViewAdapter extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+
+        private final ItemListActivity mParentActivity;
+        private final ArrayList<LoremPicsum> mValues;
+        private final boolean mTwoPane;
+
+        SimpleItemRecyclerViewAdapter(ItemListActivity parent, ArrayList<LoremPicsum> items, boolean twoPane) {
             mValues = items;
             mParentActivity = parent;
             mTwoPane = twoPane;
@@ -115,18 +125,39 @@ public class ItemListActivity extends AppCompatActivity {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_list_content, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_content, parent, false);
+
             return new ViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+            LoremPicsum loremPicsum = mValues.get(position);
+            holder.mIdView.setText(String.valueOf(loremPicsum.getId()));
+            holder.mContentView.setText(loremPicsum.getAuthor());
 
-            holder.itemView.setTag(mValues.get(position));
-            holder.itemView.setOnClickListener(mOnClickListener);
+            holder.itemView.setTag(loremPicsum);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LoremPicsum item = (LoremPicsum) view.getTag();
+                    if (mTwoPane) {
+                        Bundle arguments = new Bundle();
+                        arguments.putString(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(item.getId()));
+                        ItemDetailFragment fragment = new ItemDetailFragment();
+                        fragment.setArguments(arguments);
+                        mParentActivity.getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.item_detail_container, fragment)
+                                .commit();
+                    } else {
+                        Context context = view.getContext();
+                        Intent intent = new Intent(context, ItemDetailActivity.class);
+                        intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, item.getId());
+
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
 
         @Override

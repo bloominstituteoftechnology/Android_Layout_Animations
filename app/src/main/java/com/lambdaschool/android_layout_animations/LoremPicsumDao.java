@@ -16,6 +16,7 @@ public class LoremPicsumDao {
     private static final String URL_LOREM_PICSUM_LIST = "list";
     private static final String URL_LOREM_PICSUM_PHOTO = "%d/%d?image=%d";
     private static final int PHOTO_DIMENSION = 300;
+    private static final String TAG = "LoremPicsumDao";
 
     public static ArrayList<LoremPicsum> getAllLoremPicsumObjects() {
         String returnedJsonAsString = NetworkAdapter.httpRequest(URL_LOREM_PICSUM_BASE + URL_LOREM_PICSUM_LIST);
@@ -40,9 +41,7 @@ public class LoremPicsumDao {
                         jsonObject.getString("author"),
                         jsonObject.getString("author_url"),
                         jsonObject.getString("post_url"));
-
-                bitmap = getOneLoremPicsumPhoto(loremPicsum);
-                loremPicsum.setBitmap(bitmap);
+                Log.i(TAG,"Parsing JSON object # " + i);
 
                 loremPicsumArrayList.add(loremPicsum);
             }
