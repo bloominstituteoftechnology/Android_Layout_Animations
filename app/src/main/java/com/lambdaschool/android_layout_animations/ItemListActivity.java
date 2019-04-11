@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.lambdaschool.android_layout_animations.dummy.DummyContent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +39,13 @@ public class ItemListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<LoremPicsum> loremPicsumArrayList=LoremPicsumDao.getAllLoremPicsumObjects();
+            }
+        }).start();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
