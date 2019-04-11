@@ -1,20 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/id_text"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginStart="1dp"
+    android:layout_marginEnd="1dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="1dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:padding="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
-</LinearLayout>
+        <ImageView
+            android:id="@+id/image_view_photo"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp" />
+
+        <TextView
+            android:id="@+id/text_view_id"
+            android:text="1888"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_gravity="center_vertical"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/text_view_author"
+            android:text="Arnold Schwarzenegger"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_vertical"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/text_view_dimensions"
+            android:text="300x300"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_vertical"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/text_view_format"
+            android:text="jpeg"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_vertical"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

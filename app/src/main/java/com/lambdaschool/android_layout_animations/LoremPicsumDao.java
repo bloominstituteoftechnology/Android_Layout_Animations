@@ -41,7 +41,7 @@ public class LoremPicsumDao {
                         jsonObject.getString("author"),
                         jsonObject.getString("author_url"),
                         jsonObject.getString("post_url"));
-                Log.i(TAG,"Parsing JSON object # " + i);
+                Log.i(TAG, "Parsing JSON object # " + i);
 
                 loremPicsumArrayList.add(loremPicsum);
             }
@@ -50,6 +50,34 @@ public class LoremPicsumDao {
         }
 
         return loremPicsumArrayList;
+    }
+
+
+    public static LoremPicsum getOneLoremPicsumObject(JSONObject jsonObject) {
+        LoremPicsum loremPicsum = null;
+
+        try {
+            loremPicsum = new LoremPicsum(jsonObject.getInt("id"),
+                    jsonObject.getInt("width"),
+                    jsonObject.getInt("height"),
+                    jsonObject.getString("format"),
+                    jsonObject.getString("filename"),
+                    jsonObject.getString("author"),
+                    jsonObject.getString("author_url"),
+                    jsonObject.getString("post_url"));
+
+            Bitmap bitmap = getOneLoremPicsumPhoto(loremPicsum);
+            loremPicsum.setBitmap(bitmap);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return loremPicsum;
+    }
+
+    public static String getInitialLoremPicsumData() {
+        return NetworkAdapter.httpRequest(URL_LOREM_PICSUM_BASE + URL_LOREM_PICSUM_LIST);
     }
 
     public static Bitmap getOneLoremPicsumPhoto(LoremPicsum loremPicsum) {

@@ -2,7 +2,6 @@ package com.lambdaschool.android_layout_animations;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,12 +13,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lambdaschool.android_layout_animations.dummy.DummyContent;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
 /**
  * An activity representing a list of Items. This activity
@@ -46,7 +48,6 @@ public class ItemListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item_list);
 
         loremPicsumArrayList = new ArrayList<>();
-        getData();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -77,48 +78,58 @@ public class ItemListActivity extends AppCompatActivity {
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         simpleItemRecyclerViewAdapter = new SimpleItemRecyclerViewAdapter(this, loremPicsumArrayList, mTwoPane);
         recyclerView.setAdapter(simpleItemRecyclerViewAdapter);
-        //getData();
+        getData();
     }
 
     private void getData() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.i(TAG, "Beginning retrieval of all objects...");
-                loremPicsumArrayList = LoremPicsumDao.getAllLoremPicsumObjects();
-                Bitmap bitmap = null;
+                try {
+                    Log.i(TAG, "Beginning retrieval of all objects...");
+                    //loremPicsumArrayList = LoremPicsumDao.getAllLoremPicsumObjects();
+                    String returnedJsonAsString = LoremPicsumDao.getInitialLoremPicsumData();
+                    LoremPicsum loremPicsum = null;
+                    JSONObject jsonObject = null;
+                    JSONArray jsonArray = null;
 
-                for (int i = 0; i < loremPicsumArrayList.size(); ++i) {
-//                    bitmap = LoremPicsumDao.getOneLoremPicsumPhoto(loremPicsumArrayList.get(i));
-//                    loremPicsumArrayList.get(i).setBitmap(bitmap);
-                    final int counter = i;
+                    jsonArray = new JSONArray(returnedJsonAsString);
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            simpleItemRecyclerViewAdapter.notifyItemChanged(counter - 1);
-                            Log.i(TAG, "Notifying RecyclerView of changes at " + counter);
-                        }
-                    });
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        jsonObject = jsonArray.getJSONObject(i);
+
+                        loremPicsum = LoremPicsumDao.getOneLoremPicsumObject(jsonObject);
+                        loremPicsumArrayList.add(loremPicsum);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                simpleItemRecyclerViewAdapter.notifyItemChanged(loremPicsumArrayList.size() - 1);
+                            }
+                        });
+                        Log.i(TAG, "Grabbing and stuffing object " + i + " into the ArrayList and RecyclerView...");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
 
-        try {
+/*        try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public static class SimpleItemRecyclerViewAdapter extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
         private final ItemListActivity mParentActivity;
-        private final ArrayList<LoremPicsum> mValues;
+        private final ArrayList<LoremPicsum> loremPicsumArrayListForRecyclerView;
         private final boolean mTwoPane;
 
         SimpleItemRecyclerViewAdapter(ItemListActivity parent, ArrayList<LoremPicsum> items, boolean twoPane) {
-            mValues = items;
+            loremPicsumArrayListForRecyclerView = items;
             mParentActivity = parent;
             mTwoPane = twoPane;
         }
@@ -132,10 +143,11 @@ public class ItemListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            LoremPicsum loremPicsum = mValues.get(position);
-            holder.mIdView.setText(String.valueOf(loremPicsum.getId()));
-            holder.mContentView.setText(loremPicsum.getAuthor());
-
+            LoremPicsum loremPicsum = loremPicsumArrayListForRecyclerView.get(position);
+            holder.imageViewPhoto.setImageBitmap(loremPicsum.getBitmap());
+            holder.textViewId.setText(String.valueOf(loremPicsum.getId()));
+            holder.textViewAuthor.setText(loremPicsum.getAuthor());
+            holder.textViewDimension.setText(String.format(Locale.US, "%dx%d", loremPicsum.getWidth(), loremPicsum.getHeight()));
             holder.itemView.setTag(loremPicsum);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -162,17 +174,20 @@ public class ItemListActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return mValues.size();
+            return loremPicsumArrayListForRecyclerView.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            final TextView mIdView;
-            final TextView mContentView;
+            final ImageView imageViewPhoto;
+            final TextView textViewId, textViewAuthor, textViewDimension, textViewFormat;
 
             ViewHolder(View view) {
                 super(view);
-                mIdView = (TextView) view.findViewById(R.id.id_text);
-                mContentView = (TextView) view.findViewById(R.id.content);
+                imageViewPhoto = view.findViewById(R.id.image_view_photo);
+                textViewId = view.findViewById(R.id.text_view_id);
+                textViewAuthor = view.findViewById(R.id.text_view_author);
+                textViewDimension = view.findViewById(R.id.text_view_dimensions);
+                textViewFormat = view.findViewById(R.id.text_view_format);
             }
         }
     }
