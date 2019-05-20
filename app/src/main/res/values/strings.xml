@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Android_Sprint3_Challenge</string>
+    <string name="moves_title">Moves</string>
+    <string name="types_title">Types</string>
+    <string name="abilities_title">Abilities</string>
+    <string name="search_button_text">Search</string>
+    <string name="search_hint">Enter Pokemon Name or Pokedex ID</string>
+</resources>
