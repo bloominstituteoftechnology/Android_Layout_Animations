@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Sprint2_Challenge</string>
+    <string name="title_activity_item_detail">itemDetail</string>
 </resources>

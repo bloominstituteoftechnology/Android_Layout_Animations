@@ -16,12 +16,19 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.lambdaschool.sprint2_challenge.Model.Product
 import com.lambdaschool.sprint2_challenge.R
+import com.lambdaschool.sprint2_challenge.Shopping_items.itemDetail
 
 import kotlinx.android.synthetic.main.product_item.view.*
 
 
 
 class ProductAdapter( val products: MutableList<Product>) : RecyclerView.Adapter<ProductAdapter.ProductHolder>(){
+
+
+
+    private var context: Context? = null
+    private var lastPosition = -1
+
 
     override fun getItemCount(): Int {
         return products.size
@@ -36,6 +43,8 @@ class ProductAdapter( val products: MutableList<Product>) : RecyclerView.Adapter
     fun setEnterAnimation(viewToAnimate: View, position:Int) {
         val animation: Animation = AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.slide_in_left)
         viewToAnimate.startAnimation(animation)
+
+        lastPosition = position
 
 
     }
@@ -57,15 +66,18 @@ override fun onBindViewHolder(holder: ProductHolder, position: Int) {
         grocery.purchased = !grocery.purchased
         notifyItemChanged(position)
 
-        holder.productImage.setOnClickListener{
-
-
+        holder.productImage.setOnClickListener{ view ->
+            val intent = Intent(view.context, itemDetail::class.java)
+            intent.putExtra(itemDetail.ITEM_KEY,grocery)
+            view.context.startActivity(intent)
         }
 
 
 
 
     }
+
+
     setEnterAnimation(holder.productImage,position)
 }
 
@@ -75,7 +87,6 @@ override fun onBindViewHolder(holder: ProductHolder, position: Int) {
         val productImage: ImageView = itemView.productimage
         val productName: TextView = itemView.productName
         val listParent: LinearLayout = itemView.list_of_items
-
 
         fun bindModel(product: Product) {
             productImage.setImageResource(product.imageId)
