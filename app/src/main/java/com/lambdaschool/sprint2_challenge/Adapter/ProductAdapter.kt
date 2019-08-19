@@ -1,6 +1,7 @@
 package com.lambdaschool.sprint2_challenge.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 
@@ -8,6 +9,8 @@ import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -28,6 +31,17 @@ class ProductAdapter( val products: MutableList<Product>) : RecyclerView.Adapter
         val view = LayoutInflater.from(p0?.context).inflate(R.layout.product_item, p0, false)
         return ProductHolder(view)
     } */
+
+
+    fun setEnterAnimation(viewToAnimate: View, position:Int) {
+        val animation: Animation = AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.slide_in_left)
+        viewToAnimate.startAnimation(animation)
+
+
+    }
+
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductHolder {
         return ProductHolder(LayoutInflater.from(parent.context).inflate(R.layout.product_item, parent,false) as View)
     }
@@ -43,7 +57,16 @@ override fun onBindViewHolder(holder: ProductHolder, position: Int) {
         grocery.purchased = !grocery.purchased
         notifyItemChanged(position)
 
+        holder.productImage.setOnClickListener{
+
+
+        }
+
+
+
+
     }
+    setEnterAnimation(holder.productImage,position)
 }
 
 
