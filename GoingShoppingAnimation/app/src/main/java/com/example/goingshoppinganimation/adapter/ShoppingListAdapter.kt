@@ -21,7 +21,20 @@ class ShoppingListAdapter(val data: MutableList<ShoppingList>):
         var image = view.image_view
         val listParent = view.shopping_list
         //TODO 10 add another constant to get the position
-        var lastPostion = -1
+        var lastPosition = -1
+
+        fun setEnterAnimation(viewToAnimate: View, position: Int) {
+
+            if (position > lastPosition) {
+
+                val animation: Animation = AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.slide_in_left)
+                viewToAnimate.startAnimation(animation)
+            }
+
+        }
+
+
+
 
 
 
@@ -35,13 +48,9 @@ class ShoppingListAdapter(val data: MutableList<ShoppingList>):
             else
                 listParent.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white))
 
-
-
-
-
-
-
+                setEnterAnimation(viewToAnimate = itemView, position = 1)
         }
+        
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -57,6 +66,8 @@ class ShoppingListAdapter(val data: MutableList<ShoppingList>):
         val shoppingItems = data[position]
         holder.bindModel(shoppingItems)
 
+
+
         //TODO srt on Click listener here in order to get the position to set the favorites Boolean fun
         holder.listParent.setOnClickListener{
             if(shoppingItems.isChecked){
@@ -66,14 +77,18 @@ class ShoppingListAdapter(val data: MutableList<ShoppingList>):
                 shoppingItems.isChecked = true
                 notifyItemChanged(position)
             }
+
         }
 
 
+
     }
+
 
     override fun getItemCount(): Int {
         return data.size
 
     }
+
 
 }
