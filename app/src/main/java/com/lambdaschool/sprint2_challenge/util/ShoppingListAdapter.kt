@@ -1,10 +1,13 @@
 package com.lambdaschool.sprint2_challenge.util
 
+import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import com.lambdaschool.sprint2_challenge.R
 import com.lambdaschool.sprint2_challenge.model.ShoppingListModel
 import kotlinx.android.synthetic.main.shopping_list_items.view.*
@@ -20,8 +23,19 @@ class ShoppingListAdapter (val shoppingList: MutableList<ShoppingListModel>):
         )
     }
 
+    private var context: Context? = null
+    private var lastPosition = -1
+
     override fun getItemCount(): Int {
         return shoppingList.size
+    }
+
+    fun setEnterAnimation(viewToAnimate: View, position: Int) {
+        if (position > lastPosition) {
+            val animation: Animation = AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.slide_in_left)
+            viewToAnimate.startAnimation(animation)
+            lastPosition = position
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -37,6 +51,7 @@ class ShoppingListAdapter (val shoppingList: MutableList<ShoppingListModel>):
                 holder.shoppingNameView.text = shoppingList[position].name
             }
         }
+        setEnterAnimation(holder.shoppingItemView, position)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
