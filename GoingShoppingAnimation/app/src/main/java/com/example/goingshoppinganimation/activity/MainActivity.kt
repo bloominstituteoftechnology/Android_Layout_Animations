@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         ListRespritory.createView()
 
         button_add.setOnClickListener {
-
+            if(button_add.isPressed)
 
             //TODO call the notification heer
             BasicNotification.BasicNotification(this)
