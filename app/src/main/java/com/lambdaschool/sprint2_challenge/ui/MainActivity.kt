@@ -1,9 +1,11 @@
 package com.lambdaschool.sprint2_challenge.ui
 
-import android.content.Intent
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.transition.Explode
+import android.view.Window
 import com.lambdaschool.sprint2_challenge.listOfItem.ShoppingList
 import com.lambdaschool.sprint2_challenge.R
 import com.lambdaschool.sprint2_challenge.util.ShoppingListAdapter
@@ -19,6 +21,11 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+        window.enterTransition = Explode()
+        window.exitTransition = Explode()
+
         setContentView(R.layout.activity_main)
 
         ShoppingList.createShoppingList()
@@ -29,16 +36,8 @@ class MainActivity : AppCompatActivity() {
             adapter = ShoppingListAdapter(ShoppingList.List)
         }
 
-        choose_button.setOnClickListener{ j0 ->
-                NotificationGenerator.orderNotification(this)
-            var choseItem = 1
-            var sendIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "I want to order $choseItem")
-                type = "text/plain"
-            }
-            startActivityForResult(sendIntent,REQUEST_CODE)
-
+        choose_button.setOnClickListener {
+            NotificationGenerator.orderNotification(this)
         }
     }
 }
