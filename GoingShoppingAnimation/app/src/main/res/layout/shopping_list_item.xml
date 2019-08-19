@@ -36,7 +36,7 @@
 
         <TextView
                 android:id="@+id/textView2"
-
+                android:transitionName="shared_image"
                 android:layout_width="126dp"
                 android:layout_height="57dp"
                 android:layout_marginStart="8dp"
