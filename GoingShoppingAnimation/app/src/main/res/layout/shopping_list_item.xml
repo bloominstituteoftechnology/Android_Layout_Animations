@@ -19,6 +19,7 @@
 
         <ImageView
                 android:id="@+id/image_view"
+                android:transitionName="shared_image"
                 android:layout_width="93dp"
                 android:layout_height="83dp"
                 android:layout_marginStart="8dp"

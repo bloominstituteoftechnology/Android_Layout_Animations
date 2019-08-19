@@ -1,6 +1,11 @@
 package com.example.goingshoppinganimation.adapter
 
 
+import android.app.Activity
+import android.app.ActivityOptions
+import android.app.ActivityOptions.makeSceneTransitionAnimation
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +14,9 @@ import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goingshoppinganimation.R
+import com.example.goingshoppinganimation.activity.DetailActivity
 import com.example.goingshoppinganimation.constants.ShoppingList
+import kotlinx.android.synthetic.main.activity_detail.view.*
 import kotlinx.android.synthetic.main.shopping_list_item.view.*
 
 
@@ -50,10 +57,12 @@ class ShoppingListAdapter(val data: MutableList<ShoppingList>):
 
                 setEnterAnimation(viewToAnimate = itemView, position = 1)
         }
-        
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+
         // instead of declaring the value like in the comment bellow
         /*   val viewGroup = LayoutInflater.from(parent.context).inflate(R.layout.shopping_list_item, parent, false)
 
@@ -69,7 +78,7 @@ class ShoppingListAdapter(val data: MutableList<ShoppingList>):
 
 
         //TODO srt on Click listener here in order to get the position to set the favorites Boolean fun
-        holder.listParent.setOnClickListener{
+        holder.listParent.setOnClickListener{ context ->
             if(shoppingItems.isChecked){
                 shoppingItems.isChecked = false
                 notifyItemChanged(position)
@@ -77,6 +86,14 @@ class ShoppingListAdapter(val data: MutableList<ShoppingList>):
                 shoppingItems.isChecked = true
                 notifyItemChanged(position)
             }
+            val intent = Intent(context.context, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.ITEM_KEY, data[position])
+            val optionsBundle = ActivityOptions.makeSceneTransitionAnimation(context.context as Activity,
+                holder.image, "shared_image" ).toBundle()
+            context.context.startActivity(intent, optionsBundle)
+
+
+
 
         }
 

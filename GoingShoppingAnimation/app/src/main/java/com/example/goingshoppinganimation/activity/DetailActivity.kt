@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.transition.Explode
 import android.transition.Fade
 import android.view.Window
+import androidx.core.content.ContextCompat
 import com.example.goingshoppinganimation.R
 import com.example.goingshoppinganimation.constants.ShoppingList
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -26,5 +27,6 @@ class DetailActivity : AppCompatActivity() {
 
         val item = intent.getSerializableExtra(ITEM_KEY) as ShoppingList
         test_text.text = item.name
+        shared_image.setImageDrawable(ContextCompat.getDrawable(this, item.image))
     }
 }
