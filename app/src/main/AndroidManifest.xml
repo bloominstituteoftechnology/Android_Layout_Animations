@@ -9,11 +9,13 @@
         android:roundIcon="@drawable/bacon"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
+        <activity android:name=".listOfItem.ItemDetail"></activity>
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
                 <action android:name="android.intent.action.SEND" />
 
                 <category android:name="android.intent.category.DEFAULT" />

@@ -1,6 +1,10 @@
 package com.lambdaschool.sprint2_challenge.util
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,6 +13,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.lambdaschool.sprint2_challenge.R
+import com.lambdaschool.sprint2_challenge.listOfItem.ItemDetail
 import com.lambdaschool.sprint2_challenge.model.ShoppingListModel
 import kotlinx.android.synthetic.main.shopping_list_items.view.*
 
@@ -51,6 +56,17 @@ class ShoppingListAdapter (val shoppingList: MutableList<ShoppingListModel>):
                 holder.shoppingNameView.text = shoppingList[position].name
             }
         }
+        holder.shoppingItemView.setOnClickListener { view ->
+            val intent = Intent(view.context, ItemDetail::class.java)
+            intent.putExtra(ItemDetail.ITEM_KEY, shopping)
+
+            val optionsBundle: Bundle = ActivityOptions.makeSceneTransitionAnimation(view.context as Activity,holder.shoppingIconView, "shared_image").toBundle()
+
+
+            view.context.startActivity(intent, optionsBundle)
+        }
+
+
         setEnterAnimation(holder.shoppingItemView, position)
     }
 

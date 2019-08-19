@@ -1,10 +1,10 @@
 package com.lambdaschool.sprint2_challenge.ui
 
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.transition.Explode
+import android.transition.Slide
 import android.view.Window
 import com.lambdaschool.sprint2_challenge.listOfItem.ShoppingList
 import com.lambdaschool.sprint2_challenge.R
@@ -21,11 +21,6 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
-        window.enterTransition = Explode()
-        window.exitTransition = Explode()
-
         setContentView(R.layout.activity_main)
 
         ShoppingList.createShoppingList()
