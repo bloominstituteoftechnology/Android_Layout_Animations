@@ -18,12 +18,16 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // TODO setting animation in the Activity
         window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
         window.enterTransition = Explode()
 
         window.exitTransition = Fade()
 
         setContentView(R.layout.activity_detail)
+
+
+        //TODO setting the views in Detail Activity
 
         val item = intent.getSerializableExtra(ITEM_KEY) as ShoppingList
         test_text.text = item.name

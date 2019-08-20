@@ -27,9 +27,9 @@ class ShoppingListAdapter(val data: MutableList<ShoppingList>):
         var name = view.textView2
         var image = view.image_view
         val listParent = view.shopping_list
-        //TODO 10 add another constant to get the position
+        //TODO 10 add another constant to get the position of the view for the animation
         var lastPosition = -1
-
+            //  TODO build animation function for Main Activity Recycler View
         fun setEnterAnimation(viewToAnimate: View, position: Int) {
 
             if (position > lastPosition) {
@@ -86,8 +86,11 @@ class ShoppingListAdapter(val data: MutableList<ShoppingList>):
                 shoppingItems.isChecked = true
                 notifyItemChanged(position)
             }
+
+            // TODO in on click listener on the view load the detailed activity (shared view animation)
             val intent = Intent(context.context, DetailActivity::class.java)
             intent.putExtra(DetailActivity.ITEM_KEY, data[position])
+            // over here defined context and make sure to pass the same view as on click listener ^^
             val optionsBundle = ActivityOptions.makeSceneTransitionAnimation(context.context as Activity,
                 holder.image, "shared_image" ).toBundle()
             context.context.startActivity(intent, optionsBundle)
@@ -109,3 +112,6 @@ class ShoppingListAdapter(val data: MutableList<ShoppingList>):
 
 
 }
+
+// TODO add window content transition in res/vales/styles
+// TODO add android:transitionName="shared_image" to the xml item you wanna add the shared transition to

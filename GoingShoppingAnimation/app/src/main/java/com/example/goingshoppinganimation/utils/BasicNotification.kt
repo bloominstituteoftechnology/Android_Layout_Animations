@@ -18,7 +18,7 @@ import com.example.goingshoppinganimation.activity.MainActivity.Companion.NOTIFI
 
 object BasicNotification{
 
-
+        // TODO basic notifications built is always the same
 
 
     @TargetApi(Build.VERSION_CODES.N)

@@ -7,7 +7,7 @@ import com.example.goingshoppinganimation.constants.ShoppingConstants.ITEM_NAMES
 class ListRespritory {
     companion object {
 
-
+            // TODO this is how to to make a new fused list and iterate through given data and put it in my new list
         var createList = mutableListOf<ShoppingList>()
         // TODO combine into one list
 
