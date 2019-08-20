@@ -10,7 +10,7 @@ This is another shorter project, for this one, you'll take an existing List-Deta
 > play with all the available options until you find something that you like
 
 3. In the list activity, when the detail activity is started, enable the transition animation (Test and Commit)
-4. Set the shared element (Test and Commit)
+4. Set up an element to be shared between activities (Test and Commit)
 
 ## Test
 
